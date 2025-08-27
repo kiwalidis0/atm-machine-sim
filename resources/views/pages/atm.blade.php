@@ -48,16 +48,11 @@
             
             // Handle success case
             if (data.status === 'success') {
-                data.bills.forEach(line => {
-                    const match = line.match(/(\d+).*P\s?(\d+)/i);
-                    if (match) {
-                        const count = match[1];
-                        const denomination = match[2];
-                        tbody.innerHTML += `<tr>
-                            <td>₱${denomination}</td>
-                            <td>${count}</td>
-                        </tr>`;
-                    }
+                data.bills.forEach(bill => {
+                    tbody.innerHTML += `<tr>
+                        <td>₱${bill.denomination}</td>
+                        <td>${bill.count}</td>
+                    </tr>`;
                 });
             }
         });
