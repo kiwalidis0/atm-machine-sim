@@ -11,26 +11,27 @@ class ATMController extends Controller
         return view('pages.atm');
     }
 
-    public function withdraw(Request $request)
+   public function withdraw(Request $request)
     {    
         $amount = (int) $request->input('amount');
-
-        if($amount % 100 !== 0)
-        {
+    
+        if ($amount % 100 !== 0) {
             return response()->json([
-                'status' => 'error',  
+                'status' => 'error',
                 'message'=> 'Please enter a valid amount.'
             ]);
         }
-
-        $bills = [1000, 500, 200, 100];
-        $resultS = [];
     
+        $bills = [1000, 500, 200, 100];
+        $result = [];
+        
         foreach ($bills as $bill) {
             $count = intdiv($amount, $bill);
-            if ($count > 0) 
-            {
-                $result[] = "<p>$count bill(s) of P $bill</p>";
+            if ($count > 0) {
+                $result[] = [
+                    'denomination' => $bill,
+                    'count' => $count
+                ];
                 $amount -= $count * $bill;
             }
         }
